@@ -55,6 +55,7 @@
 ;;     modus-operandi-theme-intense-paren-match            (boolean)
 ;;     modus-operandi-theme-completions                    (choice)
 ;;     modus-operandi-theme-override-colors-alist          (alist)
+;;     modus-operandi-theme-alt-style                      (boolean)
 ;;
 ;; The default scale is as follows (it can be customised as well):
 ;;
@@ -632,6 +633,12 @@ effect than the former."
   "Use less saturated colours for code syntax highlighting."
   :type 'boolean)
 
+(defcustom modus-operandi-theme-alt-style nil
+  "Use alternative base colours.
+This will refashion the entire theme, so that it uses fewer
+greyscale values."
+  :type 'boolean)
+
 ;;; Internal functions
 
 ;; Helper functions that are meant to ease the implementation of the
@@ -1008,6 +1015,19 @@ AMOUNT is a customisation option."
     "The entire palette of `modus-operandi-theme'.
 Each element has the form (NAME . HEX).")
 
+  (defvar modus-operandi-theme-extra-colors-internal-alist nil
+    "Colour overrides for internal use only.")
+
+  (defvar modus-operandi-theme-alt-style-alist
+    '(("bg-main" . "#fefcf4")
+      ("bg-dim" . "#fbf8ef")
+      ("bg-alt" . "#f7efe5")
+      ("bg-hl-line" . "#f5eef5")
+      ("bg-active" . "#e8dfd1")
+      ("bg-inactive" . "#f6ece5")
+      ("bg-region" . "#c6bab1")
+      ("bg-header" . "#f0e2e0")))
+
   (defcustom modus-operandi-theme-override-colors-alist '()
     "Association list of palette colour overrides.
 Values can be mapped to variables, using the same syntax as the
@@ -1028,6 +1048,7 @@ Also bind `class' to ((class color) (min-colors 89))."
            ,@(mapcar (lambda (cons)
                        (list (intern (car cons)) (cdr cons)))
                      (append modus-operandi-theme-default-colors-alist
+                             modus-operandi-theme-extra-colors-internal-alist
                              modus-operandi-theme-override-colors-alist))
            ;; simple conditional styles that evaluate user-facing
            ;; customisation options
@@ -1036,6 +1057,11 @@ Also bind `class' to ((class color) (min-colors 89))."
            (modus-theme-variable-pitch
             (if modus-operandi-theme-variable-pitch-headings 'variable-pitch 'default)))
        ,@body)))
+
+(if modus-operandi-theme-alt-style
+    (setq modus-operandi-theme-extra-colors-internal-alist
+          modus-operandi-theme-alt-style-alist)
+  (setq modus-operandi-theme-extra-colors-internal-alist nil))
 
 
 

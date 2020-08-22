@@ -55,6 +55,7 @@
 ;;     modus-vivendi-theme-intense-paren-match            (boolean)
 ;;     modus-vivendi-theme-completions                    (choice)
 ;;     modus-vivendi-theme-override-colors-alist          (alist)
+;;     modus-vivendi-theme-alt-style                      (boolean)
 ;;
 ;; The default scale is as follows (it can be customised as well):
 ;;
@@ -632,6 +633,12 @@ effect than the former."
   "Use less saturated colours for code syntax highlighting."
   :type 'boolean)
 
+(defcustom modus-vivendi-theme-alt-style nil
+  "Use alternative base colours.
+This will refashion the entire theme, so that it uses fewer
+greyscale values."
+  :type 'boolean)
+
 ;;; Internal functions
 
 ;; Helper functions that are meant to ease the implementation of the
@@ -1008,6 +1015,19 @@ AMOUNT is a customisation option."
     "The entire palette of `modus-vivendi-theme'.
 Each element has the form (NAME . HEX).")
 
+  (defvar modus-vivendi-theme-extra-colors-internal-alist nil
+    "Colour overrides for internal use only.")
+
+  (defvar modus-vivendi-theme-alt-style-alist
+    '(("bg-main" . "#0c0c1f")
+      ("bg-dim" . "#101027")
+      ("bg-alt" . "#181732")
+      ("bg-hl-line" . "#191628")
+      ("bg-active" . "#282e46")
+      ("bg-inactive" . "#1a1e39")
+      ("bg-region" . "#393a53")
+      ("bg-header" . "#202037")))
+
   (defcustom modus-vivendi-theme-override-colors-alist '()
     "Association list of palette colour overrides.
 Values can be mapped to variables, using the same syntax as the
@@ -1028,6 +1048,7 @@ Also bind `class' to ((class color) (min-colors 89))."
            ,@(mapcar (lambda (cons)
                        (list (intern (car cons)) (cdr cons)))
                      (append modus-vivendi-theme-default-colors-alist
+                             modus-vivendi-theme-extra-colors-internal-alist
                              modus-vivendi-theme-override-colors-alist))
            ;; simple conditional styles that evaluate user-facing
            ;; customisation options
@@ -1036,6 +1057,11 @@ Also bind `class' to ((class color) (min-colors 89))."
            (modus-theme-variable-pitch
             (if modus-vivendi-theme-variable-pitch-headings 'variable-pitch 'default)))
        ,@body)))
+
+(if modus-vivendi-theme-alt-style
+    (setq modus-vivendi-theme-extra-colors-internal-alist
+          modus-vivendi-theme-alt-style-alist)
+  (setq modus-vivendi-theme-extra-colors-internal-alist nil))
 
 
 
