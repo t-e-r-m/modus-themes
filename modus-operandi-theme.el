@@ -1020,13 +1020,17 @@ Each element has the form (NAME . HEX).")
 
   (defvar modus-operandi-theme-alt-style-alist
     '(("bg-main" . "#fefcf4")
-      ("bg-dim" . "#fbf8ef")
+      ("bg-dim" . "#faf6ef")
       ("bg-alt" . "#f7efe5")
-      ("bg-hl-line" . "#f5eef5")
+      ("bg-hl-line" . "#f4f0e3")
       ("bg-active" . "#e8dfd1")
       ("bg-inactive" . "#f6ece5")
       ("bg-region" . "#c6bab1")
-      ("bg-header" . "#f0e2e0")))
+      ("bg-header" . "#ede3e0")
+      ("bg-tab-bar" . "#dcd3d3")
+      ("bg-tab-active" . "#fdf6eb")
+      ("bg-tab-inactive" . "#c8bab8")
+      ("fg-unfocused" . "#55556f")))
 
   (defcustom modus-operandi-theme-override-colors-alist '()
     "Association list of palette colour overrides.

@@ -1019,14 +1019,18 @@ Each element has the form (NAME . HEX).")
     "Colour overrides for internal use only.")
 
   (defvar modus-vivendi-theme-alt-style-alist
-    '(("bg-main" . "#0c0c1f")
-      ("bg-dim" . "#101027")
+    '(("bg-main" . "#100b17")
+      ("bg-dim" . "#161129")
       ("bg-alt" . "#181732")
       ("bg-hl-line" . "#191628")
       ("bg-active" . "#282e46")
       ("bg-inactive" . "#1a1e39")
       ("bg-region" . "#393a53")
-      ("bg-header" . "#202037")))
+      ("bg-header" . "#202037")
+      ("bg-tab-bar" . "#262b41")
+      ("bg-tab-active" . "#120f18")
+      ("bg-tab-inactive" . "#3a3a5a")
+      ("fg-unfocused" . "#9a9aab")))
 
   (defcustom modus-vivendi-theme-override-colors-alist '()
     "Association list of palette colour overrides.
